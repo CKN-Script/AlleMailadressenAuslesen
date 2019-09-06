@@ -1,21 +1,29 @@
-﻿clear
+# $ErrorActionPreference = "SilentlyContinue"
+
+. "$env:ExchangeInstallPath\bin\RemoteExchange.ps1"; 
+Connect-ExchangeServer -auto
+
+$ausgabepfad=".\"
+$ausgabedatei=$ausgabepfad + "MailAdresses.csv"
 
 
-$Apps = Get-AppPackage *Desk*
-foreach ($App in $Apps)
+clear
+$error.clear()
+
+$Mailboxes = Get-Mailbox
+foreach ($Mailbox in $Mailboxes)
 {
-        if ($App.Dependencies.Count -gt 0) # Filtert alle Apps die keine Abhängigkeiten haben.
-        {
-            Write-host $App.Name '(Abhängigkeiten:' $App.Dependencies.Count ')'
+
+            Write-host $Mailbox.Name '(Anzahl Adressen:' $Mailbox.EmailAddresses.Count ')'
             echo ***********************
 
-            $Deps = $App.Dependencies
-            foreach ($Dep in  $Deps) 
+            $Adresses = $Mailbox.EmailAddresses
+            foreach ($Adress in  $Adresses) 
             {
-                Write-Host $Dep
+                Write-Host $Adress
             }
 
-        }
+
 
     Start-Sleep -Seconds 1
     echo ""
