@@ -21,6 +21,7 @@ foreach ($Mailbox in $Mailboxes)
             foreach ($Adress in  $Adresses) 
             {
                 Write-Host $Adress
+		$Adress | Out-File -FilePath c:\test.txt
             }
 
 
